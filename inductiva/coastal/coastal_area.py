@@ -93,6 +93,7 @@ class CoastalArea(scenarios.Scenario):
         simulation_time: float = 100,
         time_step: float = 0.1,
         output_time_step: float = 1,
+        use_mpi_cluster: bool = False,
     ) -> tasks.Task:
         """Simulates the coastal area scenario.
 
@@ -123,6 +124,7 @@ class CoastalArea(scenarios.Scenario):
             machine_group=machine_group,
             storage_dir=storage_dir,
             sim_config_filename=SWASH_CONFIG_FILENAME,
+            use_mpi_cluster=use_mpi_cluster,
         )
 
         return task

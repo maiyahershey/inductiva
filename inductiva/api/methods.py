@@ -283,6 +283,7 @@ def submit_task(api_instance, task_request, params, type_annotations):
 def invoke_async_api(method_name: str,
                      params,
                      type_annotations: Dict[Any, Type],
+                     use_mpi_cluster: bool = False,
                      resource_pool_id: Optional[UUID] = None,
                      storage_path_prefix: Optional[str] = "") -> str:
     """Perform a task asyc and remotely via Inductiva's Web API.
@@ -316,10 +317,13 @@ def invoke_async_api(method_name: str,
         type_annotations=type_annotations,
     )
 
-    task_request = TaskRequest(method=method_name,
-                               params=request_params,
-                               resource_pool=resource_pool_id,
-                               storage_path_prefix=storage_path_prefix)
+    task_request = TaskRequest(
+        method=method_name,
+        params=request_params,
+        resource_pool=resource_pool_id,
+        storage_path_prefix=storage_path_prefix,
+        use_mpi_cluster=use_mpi_cluster,
+    )
 
     with ApiClient(api_config) as client:
         api_instance = TasksApi(client)
@@ -341,17 +345,17 @@ def invoke_async_api(method_name: str,
 def compare_client_and_backend_versions(client_version: str):
     """ Compares the provided client version 7with the backend API version.
 
-    Sends a GET request to the backend API's version comparison endpoint 
-    with the client version as a parameter. Evaluates the response to 
-    determine if the client version is compatible with the backend version. 
+    Sends a GET request to the backend API's version comparison endpoint
+    with the client version as a parameter. Evaluates the response to
+    determine if the client version is compatible with the backend version.
     Raises exceptions for communication issues or incompatibility.
 
     Parameters:
-    - client_version (str): The version of the client to be compared with the 
+    - client_version (str): The version of the client to be compared with the
                             backend version.
 
     Raises:
-    - RuntimeError: If the API cannot be reached, or if the client version is 
+    - RuntimeError: If the API cannot be reached, or if the client version is
       incompatible with the backend version, or for other general failures.
     """
     api_config = Configuration(host=inductiva.api_url)

@@ -11,6 +11,7 @@ def run_simulation(
     input_dir: pathlib.Path,
     machine_group: Optional[resources.MachineGroup] = None,
     storage_dir: Optional[types.Path] = "",
+    use_mpi_cluster: bool = False,
     **kwargs: Any,
 ) -> tasks.Task:
     """Run a simulation via Inductiva Web API."""
@@ -33,6 +34,7 @@ def run_simulation(
         type_annotations,
         resource_pool_id=resource_pool_id,
         storage_path_prefix=storage_dir,
+        use_mpi_cluster=use_mpi_cluster,
     )
     task = tasks.Task(task_id)
     if not isinstance(task_id, str):

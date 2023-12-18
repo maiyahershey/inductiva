@@ -20,7 +20,7 @@ class Scenario(ABC):
     def config_params(self, simulator: simulators.Simulator,
                       input_dir: types.Path):
         """Entry-point to further configure params.
-        
+
         Useful when a scenario can be configured for several simulators,
         but params differ in implementation between them.
         """
@@ -29,7 +29,7 @@ class Scenario(ABC):
     def add_extra_input_files(self, simulator: simulators.Simulator,
                               input_dir: types.Path):
         """Entry-point to add extra files used in the simulation.
-        
+
         Usefull to files as args to the simulation. E.g., protein or vehicle.
         """
         pass
@@ -109,6 +109,7 @@ class Scenario(ABC):
         simulator: simulators.Simulator,
         machine_group: Optional[resources.MachineGroup] = None,
         storage_dir: Optional[types.Path] = "",
+        use_mpi_cluster: bool = False,
         **kwargs,
     ):
         """Simulates the scenario synchronously."""
@@ -127,5 +128,6 @@ class Scenario(ABC):
                 input_dir,
                 machine_group=machine_group,
                 storage_dir=storage_dir,
+                use_mpi_cluster=use_mpi_cluster,
                 **kwargs,
             )

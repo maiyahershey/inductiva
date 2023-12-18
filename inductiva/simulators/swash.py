@@ -15,6 +15,7 @@ class SWASH(simulators.Simulator):
         self,
         input_dir: types.Path,
         sim_config_filename: str,
+        use_mpi_cluster: bool = False,
         machine_group: Optional[resources.MachineGroup] = None,
         storage_dir: Optional[types.Path] = "",
     ) -> tasks.Task:
@@ -29,4 +30,5 @@ class SWASH(simulators.Simulator):
         return super().run(input_dir,
                            machine_group=machine_group,
                            input_filename=sim_config_filename,
-                           storage_dir=storage_dir)
+                           storage_dir=storage_dir,
+                           use_mpi_cluster=use_mpi_cluster)
